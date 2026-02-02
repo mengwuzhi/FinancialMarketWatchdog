@@ -1,0 +1,25 @@
+{
+  "dingtalk": {
+    "webhook": "https://oapi.dingtalk.com/robot/send?access_token=YOUR_ACCESS_TOKEN",
+    "secret": "YOUR_SECRET_KEY"
+  },
+  "lof": {
+    "limit_pct": 9.9,
+    "speed_window_minutes": 10.0,
+    "speed_threshold_pct": 2.0,
+    "premium_threshold_pct": 10.0,
+    "limit_codes_file": "lof_limit_codes.txt",
+    "speed_codes_file": "lof_speed_codes.txt"
+  },
+  "ai": {
+    "provider": "qwen",
+    "api_key": "YOUR_QWEN_API_KEY",
+    "api_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "model": "qwen-turbo"
+  },
+  "rss": {
+    "feed_url": "https://your-rss-feed-url.xml",
+    "check_interval_minutes": 5
+  },
+  "timezone": "Asia/Shanghai"
+}

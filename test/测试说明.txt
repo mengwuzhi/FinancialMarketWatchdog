@@ -1,0 +1,97 @@
+========================================
+投资监控系统 - 测试脚本使用说明
+========================================
+
+已创建的测试脚本：
+-------------------
+1. quick_test.py - 快速配置测试（10秒）
+2. test_offline.py - 离线功能测试（30秒）
+3. test_lof_monitor_improved.py - LOF监控测试（1-3分钟）
+4. test_dingtalk_notifier.py - 钉钉通知测试（30秒）
+5. test_suite.py - 完整测试套件（3-5分钟）
+6. diagnose_network.py - 网络诊断工具（1-3分钟）
+
+运行方法：
+---------
+
+【Windows用户】
+
+方法1：使用测试脚本（推荐）
+   双击运行： test\run_tests.bat
+
+方法2：手动运行
+   1. 打开命令提示符（CMD）
+   2. 切换到项目根目录：
+      cd d:\huangwei\Desktop\test\lof_watchdog
+   3. 设置编码并运行：
+      chcp 65001
+      set PYTHONIOENCODING=utf-8
+      python test/quick_test.py
+
+方法3：使用PowerShell
+   $env:PYTHONIOENCODING = "utf-8"
+   python test/quick_test.py
+
+【Linux/Mac用户】
+
+直接运行：
+   python test/quick_test.py
+   python test/test_offline.py
+   python test/test_suite.py
+
+或使用脚本：
+   chmod +x test/run_tests.sh
+   ./test/run_tests.sh
+
+推荐测试流程：
+-------------
+1. 快速配置测试（必须通过）
+   python test/quick_test.py
+
+2. 离线功能测试（推荐通过）
+   python test/test_offline.py
+
+3. 网络诊断（如有网络问题）
+   python test/diagnose_network.py
+
+4. LOF监控测试（带重试机制）
+   python test/test_lof_monitor_improved.py
+
+5. 钉钉通知测试（会发送实际消息！）
+   python test/test_dingtalk_notifier.py
+
+6. 完整测试套件（最终验证）
+   python test/test_suite.py
+
+注意事项：
+---------
+1. Windows用户必须设置UTF-8编码才能正常显示测试结果
+2. 所有测试脚本必须从项目根目录运行
+3. test_dingtalk_notifier.py会向钉钉群发送实际消息，谨慎使用
+4. test_lof_monitor_improved.py需要网络连接，建议在交易时间测试
+
+常见问题：
+---------
+Q1: 出现Unicode编码错误怎么办？
+A1: Windows用户运行前先执行：
+    chcp 65001
+    set PYTHONIOENCODING=utf-8
+
+Q2: 提示找不到模块怎么办？
+A2: 确保从项目根目录运行：
+    cd d:\huangwei\Desktop\test\lof_watchdog
+    python test/quick_test.py
+
+Q3: 配置文件不存在怎么办？
+A3: 复制并编辑配置文件：
+    copy data\config.json.example data\config.json
+    notepad data\config.json
+
+详细文档：
+---------
+- test/README.md - 测试脚本详细说明
+- TESTING.md - 完整测试指南
+- DOCKER_GUIDE.md - Docker部署指南
+- README.md - 项目使用说明
+
+========================================

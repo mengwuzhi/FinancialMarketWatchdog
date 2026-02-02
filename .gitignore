@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 敏感配置文件（包含钉钉webhook等）
+data/config.json
+data/state.json
+
+# 日志文件
+logs/
+*.log
+
+# 测试和临时文件
+test/*.csv
+test/temp_*
+*.tmp
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 操作系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 股价数据库文件（如果太大）
+db/*.sql
+db/stock_prices.db
