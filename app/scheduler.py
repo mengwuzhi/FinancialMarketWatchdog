@@ -173,8 +173,8 @@ def start_scheduler():
         trading_day_only = job_cfg.get("trading_day_only", False)
         wrapped = _wrap_job(handler, job_id, trading_day_only)
 
-        trigger_kwargs = {k: v for k, v in job_cfg.items() 
-                          if k not in ["job_id", "trading_day_only"]}
+        trigger_kwargs = {k: v for k, v in job_cfg.items()
+                          if k not in ["job_id", "trigger", "trading_day_only"]}
         trigger = CronTrigger(**trigger_kwargs)
 
         _scheduler.add_job(
@@ -196,7 +196,8 @@ def start_scheduler():
 
         wrapped = _wrap_job(handler, job_id, trading_day_only=False)
 
-        trigger_kwargs = {k: v for k, v in job_cfg.items() if k != "job_id"}
+        trigger_kwargs = {k: v for k, v in job_cfg.items()
+                          if k not in ["job_id", "trigger"]}
         trigger = CronTrigger(**trigger_kwargs)
 
         _scheduler.add_job(

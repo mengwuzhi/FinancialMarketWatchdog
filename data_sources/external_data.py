@@ -259,7 +259,7 @@ class ExternalDataProvider:
 
                     # 方法2: 匹配交易所前缀格式（如 "105.AAPL"）
                     if row is None or row.empty:
-                        prefix_match = df[df["代码"].str.match(f"^\d+\.{symbol}$", na=False, case=False)]
+                        prefix_match = df[df["代码"].str.match(rf"^\d+\.{symbol}$", na=False, case=False)]
                         if not prefix_match.empty:
                             row = prefix_match
 

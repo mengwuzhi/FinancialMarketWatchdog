@@ -20,7 +20,9 @@
       "Bash(\"d:/code/FinancialMarketWatchdog_src/app/routers/market.py\":*)",
       "Bash(\"d:/code/FinancialMarketWatchdog_src/app/routers/crawler.py\":*)",
       "Bash(\"d:/code/FinancialMarketWatchdog_src/app/scheduler.py\":*)",
-      "Bash(\"d:/code/FinancialMarketWatchdog_src/.env.example\":*)"
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/.env.example\":*)",
+      "Bash(git commit:*)",
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/.env\":*)"
     ]
   }
 }
