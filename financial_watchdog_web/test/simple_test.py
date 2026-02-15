@@ -1,0 +1,187 @@
+#!/usr/bin/env python3
+"""
+简单测试脚本 - 使用httpx测试外部API连接
+"""
+
+import asyncio
+import httpx
+import time
+import json
+from datetime import datetime
+from typing import Dict, List
+
+async def test_api_connection(name: str, url: str, method: str = "GET", 
+                             params: Dict = None, headers: Dict = None, 
+                             timeout: int = 5) -> Dict:
+    """测试API连接"""
+    print(f"测试 {name}...")
+    
+    result = {
+        "name": name,
+        "url": url,
+        "status": "unknown",
+        "response_time": 0,
+        "status_code": None,
+        "error": None
+    }
+    
+    try:
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            start_time = time.time()
+            
+            if method.upper() == "GET":
+                response = await client.get(url, params=params, headers=headers)
+            elif method.upper() == "POST":
+                response = await client.post(url, json=params, headers=headers)
+            else:
+                raise ValueError(f"不支持的HTTP方法: {method}")
+            
+            result["response_time"] = time.time() - start_time
+            result["status_code"] = response.status_code
+            
+            if response.status_code == 200:
+                result["status"] = "success"
+                try:
+                    # 尝试解析JSON响应
+                    data = response.json()
+                    result["data"] = data
+                except:
+                    result["data"] = {"message": "响应不是JSON格式"}
+            else:
+                result["status"] = f"error: HTTP {response.status_code}"
+                result["error"] = response.text[:100]  # 只取前100个字符
+                
+    except httpx.TimeoutException:
+        result["status"] = "timeout"
+        result["error"] = "请求超时"
+    except httpx.ConnectError:
+        result["status"] = "connection_error"
+        result["error"] = "连接错误"
+    except Exception as e:
+        result["status"] = "error"
+        result["error"] = str(e)
+    
+    return result
+
+async def run_tests():
+    """运行所有测试"""
+    print("=" * 60)
+    print("外部API连接测试 (使用httpx)")
+    print("=" * 60)
+    
+    # 定义要测试的API
+    tests = [
+        {
+            "name": "Alpha Vantage (股票数据)",
+            "url": "https://www.alphavantage.co/query",
+            "params": {
+                "function": "TIME_SERIES_DAILY",
+                "symbol": "IBM",
+                "apikey": "demo",
+                "outputsize": "compact"
+            }
+        },
+        {
+            "name": "Yahoo Finance (市场数据)",
+            "url": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL",
+            "params": {
+                "range": "1d",
+                "interval": "1m"
+            }
+        },
+        {
+            "name": "新浪财经RSS",
+            "url": "https://rss.sina.com.cn/finance/news/global.xml"
+        },
+        {
+            "name": "证券时报RSS",
+            "url": "http://www.stcn.com/rss/finance.xml"
+        }
+    ]
+    
+    # 并行运行所有测试
+    tasks = []
+    for test in tests:
+        task = test_api_connection(
+            name=test["name"],
+            url=test["url"],
+            params=test.get("params"),
+            headers=test.get("headers")
+        )
+        tasks.append(task)
+    
+    results = await asyncio.gather(*tasks)
+    
+    # 打印结果
+    for result in results:
+        status_icon = "✅" if result["status"] == "success" else "❌"
+        print(f"{status_icon} {result['name']}: {result['status']} ({result['response_time']:.3f}s)")
+    
+    # 汇总统计
+    print("\n" + "=" * 60)
+    print("测试汇总:")
+    print("=" * 60)
+    
+    successful = sum(1 for r in results if r["status"] == "success")
+    total = len(results)
+    
+    print(f"总测试数: {total}")
+    print(f"成功: {successful}")
+    print(f"失败: {total - successful}")
+    
+    # 详细结果
+    print("\n详细结果:")
+    for result in results:
+        print(f"\n{result['name']}:")
+        print(f"  URL: {result['url']}")
+        print(f"  状态: {result['status']}")
+        print(f"  响应时间: {result['response_time']:.3f}秒")
+        print(f"  状态码: {result['status_code']}")
+        
+        if result["error"]:
+            print(f"  错误: {result['error']}")
+    
+    # 保存结果
+    output = {
+        "timestamp": datetime.now().isoformat(),
+        "total_tests": total,
+        "successful": successful,
+        "results": results
+    }
+    
+    with open("test/simple_test_results.json", "w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+    
+    print(f"\n详细结果已保存到: test/simple_test_results.json")
+    
+    # 给出建议
+    if successful == total:
+        print("\n✅ 所有外部API连接测试通过！")
+        return 0
+    elif successful >= total * 0.5:
+        print("\n⚠️  部分外部API连接正常，部分可能需要配置或网络访问")
+        print("   建议:")
+        print("   1. 检查网络连接")
+        print("   2. 某些API可能需要VPN访问")
+        print("   3. 某些RSS源可能已失效")
+        return 1
+    else:
+        print("\n❌ 多个外部API连接失败")
+        print("   可能原因:")
+        print("   1. 网络连接问题")
+        print("   2. 防火墙限制")
+        print("   3. API服务暂时不可用")
+        return 2
+
+def main():
+    """主函数"""
+    try:
+        exit_code = asyncio.run(run_tests())
+        return exit_code
+    except Exception as e:
+        print(f"测试过程中发生错误: {e}")
+        return 3
+
+if __name__ == "__main__":
+    exit_code = main()
+    exit(exit_code)

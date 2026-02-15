@@ -1,0 +1,139 @@
+{
+  "timestamp": "2026-02-15T09:48:21.212590",
+  "total_tests": 12,
+  "successful": 11,
+  "network_status": "good",
+  "results": [
+    {
+      "name": "DNS解析: www.alphavantage.co",
+      "hostname": "www.alphavantage.co",
+      "status": "success",
+      "ip_addresses": [
+        "104.20.25.228",
+        "172.66.170.11"
+      ],
+      "error": null,
+      "response_time": 0.08269929885864258
+    },
+    {
+      "name": "DNS解析: query1.finance.yahoo.com",
+      "hostname": "query1.finance.yahoo.com",
+      "status": "success",
+      "ip_addresses": [
+        "69.147.80.12",
+        "69.147.80.15"
+      ],
+      "error": null,
+      "response_time": 0.17647576332092285
+    },
+    {
+      "name": "DNS解析: rss.sina.com.cn",
+      "hostname": "rss.sina.com.cn",
+      "status": "success",
+      "ip_addresses": [
+        "220.185.164.224",
+        "60.188.126.98",
+        "60.188.126.97",
+        "60.188.126.99",
+        "60.188.126.93",
+        "220.185.164.206",
+        "60.188.126.95",
+        "60.188.126.94"
+      ],
+      "error": null,
+      "response_time": 0.010190963745117188
+    },
+    {
+      "name": "DNS解析: www.stcn.com",
+      "hostname": "www.stcn.com",
+      "status": "success",
+      "ip_addresses": [
+        "47.112.24.129"
+      ],
+      "error": null,
+      "response_time": 0.013569116592407227
+    },
+    {
+      "name": "DNS解析: github.com",
+      "hostname": "github.com",
+      "status": "success",
+      "ip_addresses": [
+        "20.205.243.166"
+      ],
+      "error": null,
+      "response_time": 0.008120059967041016
+    },
+    {
+      "name": "Alpha Vantage API",
+      "url": "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo",
+      "status": "success",
+      "response_time": 0.671074390411377,
+      "status_code": 200,
+      "error": null,
+      "data": {
+        "content_length": 100,
+        "content_type": "application/json"
+      }
+    },
+    {
+      "name": "Yahoo Finance",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=1d&interval=1m",
+      "status": "success",
+      "response_time": 0.38413333892822266,
+      "status_code": 200,
+      "error": null,
+      "data": {
+        "content_length": 100,
+        "content_type": "application/json;charset=utf-8"
+      }
+    },
+    {
+      "name": "GitHub API",
+      "url": "https://api.github.com",
+      "status": "success",
+      "response_time": 0.4478278160095215,
+      "status_code": 200,
+      "error": null,
+      "data": {
+        "content_length": 100,
+        "content_type": "application/json; charset=utf-8"
+      }
+    },
+    {
+      "name": "公共API测试",
+      "url": "https://httpbin.org/get",
+      "status": "success",
+      "response_time": 1.4280085563659668,
+      "status_code": 200,
+      "error": null,
+      "data": {
+        "content_length": 100,
+        "content_type": "application/json"
+      }
+    },
+    {
+      "name": "端口连接: www.baidu.com:80",
+      "hostname": "www.baidu.com",
+      "port": 80,
+      "status": "success",
+      "response_time": 0.02874922752380371,
+      "error": null
+    },
+    {
+      "name": "端口连接: www.google.com:443",
+      "hostname": "www.google.com",
+      "port": 443,
+      "status": "timeout",
+      "response_time": 0,
+      "error": "连接超时"
+    },
+    {
+      "name": "端口连接: 8.8.8.8:53",
+      "hostname": "8.8.8.8",
+      "port": 53,
+      "status": "success",
+      "response_time": 0.22276663780212402,
+      "error": null
+    }
+  ]
+}
