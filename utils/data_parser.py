@@ -74,45 +74,6 @@ def find_code_column_index(df: pd.DataFrame) -> int:
     return best_idx
 
 
-def prepare_lof_df(df: Optional[pd.DataFrame]) -> Optional[pd.DataFrame]:
-    """
-    准备LOF DataFrame，添加标准化的代码列
-
-    Args:
-        df: 输入的DataFrame
-
-    Returns:
-        处理后的DataFrame
-    """
-    if df is None or df.empty:
-        return None
-
-    df = df.copy()
-    code_idx = find_code_column_index(df)
-    df["_code"] = df.iloc[:, code_idx].astype(str).str.zfill(6)
-    return df
-
-
-def order_by_codes(df: pd.DataFrame, codes: List[str]) -> pd.DataFrame:
-    """
-    按照指定的代码顺序排序DataFrame
-
-    Args:
-        df: DataFrame
-        codes: 代码列表
-
-    Returns:
-        排序后的DataFrame
-    """
-    if not codes or df.empty:
-        return df
-
-    order = {code: idx for idx, code in enumerate(codes)}
-    df = df.copy()
-    df["_order"] = df["_code"].map(order)
-    return df.sort_values("_order").drop(columns="_order")
-
-
 def get_column_map(df: pd.DataFrame) -> Dict[str, Optional[str]]:
     """
     获取常用列的映射

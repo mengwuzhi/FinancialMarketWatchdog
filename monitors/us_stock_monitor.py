@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from notifiers.dingtalk import DingTalkNotifier
 from data_sources.akshare_provider import AKShareProvider
@@ -10,7 +11,7 @@ from config.us_stocks_config import get_us_stocks_config
 class USStockDailyReporter:
     """美股市场日报生成器"""
 
-    def __init__(self, notifier: DingTalkNotifier):
+    def __init__(self, notifier: Optional[DingTalkNotifier] = None):
         self.notifier = notifier
         self.data_provider = AKShareProvider()
         self.external_provider = ExternalDataProvider()
@@ -19,29 +20,31 @@ class USStockDailyReporter:
         # 从配置文件加载美股股票代码
         self.us_stock_config = get_us_stocks_config()
 
+    def collect_data(self) -> dict:
+        """收集美股市场数据（供API返回JSON）"""
+        print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] US Stock Data Collection")
+
+        data = {}
+        data["indices"] = self._get_indices()
+
+        all_stocks_data = self._get_all_us_stocks()
+        data["tech_stocks"] = all_stocks_data.get("tech_stocks", {})
+        data["chinese_stocks"] = all_stocks_data.get("chinese_stocks", {})
+
+        data["global"] = self._get_global_data()
+        return data
+
     def generate_report(self):
-        """生成美股市场日报"""
+        """生成美股市场日报并发送通知（供定时任务调用）"""
         print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] US Stock Daily Report")
 
         try:
-            data = {}
-
-            # 获取主要指数
-            data["indices"] = self._get_indices()
-
-            # 一次性获取所有美股数据（科技股+中概股）
-            all_stocks_data = self._get_all_us_stocks()
-
-            # 按分组提取数据
-            data["tech_stocks"] = all_stocks_data.get("tech_stocks", {})
-            data["chinese_stocks"] = all_stocks_data.get("chinese_stocks", {})
-
-            # 获取全球市场数据
-            data["global"] = self._get_global_data()
+            data = self.collect_data()
 
             # 格式化并发送消息
             message = self.formatter.format_us_stock_report(data)
-            self.notifier.send_text(message)
+            if self.notifier:
+                self.notifier.send_text(message)
             print("US stock daily report sent")
 
         except Exception as e:

@@ -17,27 +17,6 @@ class AKShareProvider:
             requests.exceptions.Timeout,
             requests.exceptions.ConnectionError,
             requests.exceptions.RequestException,
-            RemoteDisconnected,  # 远程服务器断开连接
-            ConnectionResetError,  # 连接被重置
-            ConnectionAbortedError,  # 连接中止
-        ),
-    )
-    def get_lof_realtime() -> Optional[pd.DataFrame]:
-        """获取LOF实时行情（带3次重试，支持网络中断恢复）"""
-        try:
-            return ak.fund_lof_spot_em()
-        except Exception as e:
-            print(f"[ERROR] Failed to get LOF data: {e}")
-            raise  # 抛出异常让重试机制处理
-
-    @staticmethod
-    @retry_on_failure(
-        max_attempts=3,
-        delay=5.0,
-        exceptions=(
-            requests.exceptions.Timeout,
-            requests.exceptions.ConnectionError,
-            requests.exceptions.RequestException,
             RemoteDisconnected,
             ConnectionResetError,
             ConnectionAbortedError,

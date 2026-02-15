@@ -9,8 +9,8 @@ from datetime import datetime, date, timedelta
 import pandas as pd
 import yfinance as yf
 
-from config.settings import INDEX_CONFIG
-from db.connection   import execute_query, executemany
+from data_crawler.config.settings import INDEX_CONFIG
+from data_crawler.db.connection   import execute_query, executemany
 
 logger = logging.getLogger(__name__)
 

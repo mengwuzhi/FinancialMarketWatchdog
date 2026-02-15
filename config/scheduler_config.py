@@ -1,15 +1,6 @@
 # 定时任务配置
 
-JOBS = [
-    # LOF实时监控：交易日 09:00-15:00 每分钟执行
-    {
-        "job_id": "lof_realtime_monitor",
-        "trigger": "cron",
-        "day_of_week": "mon-fri",
-        "hour": "9-15",
-        "minute": "*/1",
-        "trading_day_only": True,
-    },
+MONITOR_JOBS = [
     # A股市场日报：交易日 18:30
     {
         "job_id": "a_share_daily_report",
@@ -35,5 +26,62 @@ JOBS = [
         "hour": "22-23",
         "minute": "*/5",
         "trading_day_only": False,
+    },
+]
+
+CRAWLER_JOBS = [
+    # 财经新闻爬取：每小时整点
+    {
+        "job_id": "crawler_news",
+        "trigger": "cron",
+        "minute": 0,
+    },
+    # 实时价格采集：每小时第5分钟
+    {
+        "job_id": "crawler_realtime",
+        "trigger": "cron",
+        "minute": 5,
+    },
+    # 历史数据补齐：每天凌晨3:00
+    {
+        "job_id": "crawler_catchup",
+        "trigger": "cron",
+        "hour": 3,
+        "minute": 0,
+    },
+    # 美股前一交易日K线：每天早上6:00
+    {
+        "job_id": "crawler_daily_us",
+        "trigger": "cron",
+        "hour": 6,
+        "minute": 0,
+    },
+    # IC/IM期货移仓信号：每天14:30
+    {
+        "job_id": "crawler_futures",
+        "trigger": "cron",
+        "hour": 14,
+        "minute": 30,
+    },
+    # A股/港股今日K线：每天15:30
+    {
+        "job_id": "crawler_daily_cn_hk",
+        "trigger": "cron",
+        "hour": 15,
+        "minute": 30,
+    },
+    # 加密货币/汇率今日K线：每天16:40
+    {
+        "job_id": "crawler_daily_crypto_fx",
+        "trigger": "cron",
+        "hour": 16,
+        "minute": 40,
+    },
+    # 贵金属今日K线：每天16:50
+    {
+        "job_id": "crawler_daily_commodities",
+        "trigger": "cron",
+        "hour": 16,
+        "minute": 50,
     },
 ]

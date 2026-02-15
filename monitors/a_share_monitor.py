@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Optional
 
 from notifiers.dingtalk import DingTalkNotifier
 from data_sources.akshare_provider import AKShareProvider
@@ -9,37 +10,35 @@ from utils.formatters import MessageFormatter
 class AShareDailyReporter:
     """A股市场日报生成器"""
 
-    def __init__(self, notifier: DingTalkNotifier):
+    def __init__(self, notifier: Optional[DingTalkNotifier] = None):
         self.notifier = notifier
         self.data_provider = AKShareProvider()
         self.external_provider = ExternalDataProvider()
         self.formatter = MessageFormatter()
 
+    def collect_data(self) -> dict:
+        """收集A股市场数据（供API返回JSON）"""
+        print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] A-Share Data Collection")
+
+        data = {}
+        data["indices"] = self._get_indices()
+        data["market"] = self._get_market_summary()
+        data["sectors"] = self._get_hot_sectors()
+        data["funds"] = self._get_fund_flow()
+        data["global"] = self._get_global_data()
+        return data
+
     def generate_report(self):
-        """生成A股市场日报"""
+        """生成A股市场日报并发送通知（供定时任务调用）"""
         print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] A-Share Daily Report")
 
         try:
-            data = {}
-
-            # 获取主要指数
-            data["indices"] = self._get_indices()
-
-            # 获取市场概况
-            data["market"] = self._get_market_summary()
-
-            # 获取热点板块
-            data["sectors"] = self._get_hot_sectors()
-
-            # 获取资金流向
-            data["funds"] = self._get_fund_flow()
-
-            # 获取全球市场数据
-            data["global"] = self._get_global_data()
+            data = self.collect_data()
 
             # 格式化并发送消息
             message = self.formatter.format_a_share_report(data)
-            self.notifier.send_text(message)
+            if self.notifier:
+                self.notifier.send_text(message)
             print("A-Share daily report sent")
 
         except Exception as e:

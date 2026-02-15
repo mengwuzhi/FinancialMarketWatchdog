@@ -11,8 +11,8 @@ from datetime import datetime
 
 import requests
 
-from config.settings import DEFAULT_HEADERS, REALTIME_CONFIG, COINGECKO_IDS
-from db.connection   import executemany
+from data_crawler.config.settings import DEFAULT_HEADERS, REALTIME_CONFIG, COINGECKO_IDS
+from data_crawler.db.connection   import executemany
 
 logger = logging.getLogger(__name__)
 

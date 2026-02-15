@@ -18,8 +18,8 @@ from datetime import datetime, date
 import requests
 from bs4 import BeautifulSoup
 
-from config.settings import DEFAULT_HEADERS
-from db.connection   import executemany
+from data_crawler.config.settings import DEFAULT_HEADERS
+from data_crawler.db.connection   import executemany
 
 logger = logging.getLogger(__name__)
 

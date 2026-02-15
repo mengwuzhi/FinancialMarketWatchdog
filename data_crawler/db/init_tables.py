@@ -1,7 +1,7 @@
 """Database table initialization"""
 import logging
 
-from db.connection import execute_query
+from data_crawler.db.connection import execute_query
 
 logger = logging.getLogger(__name__)
 

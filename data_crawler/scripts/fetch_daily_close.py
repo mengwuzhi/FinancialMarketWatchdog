@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Standalone: fetch today's closing data for all categories."""
 import sys, os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-from db.init_tables                import init_all_tables
-from crawlers.index_crawler        import fetch_today_indices
-from crawlers.crypto_fx_crawler    import fetch_today_crypto_fx
-from crawlers.commodity_crawler    import fetch_today_commodities
+from data_crawler.db.init_tables                import init_all_tables
+from data_crawler.crawlers.index_crawler        import fetch_today_indices
+from data_crawler.crawlers.crypto_fx_crawler    import fetch_today_crypto_fx
+from data_crawler.crawlers.commodity_crawler    import fetch_today_commodities
 
 if __name__ == "__main__":
     init_all_tables()

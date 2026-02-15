@@ -29,16 +29,16 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # 复制项目代码
+COPY app/ /app/app/
 COPY config/ /app/config/
 COPY core/ /app/core/
 COPY monitors/ /app/monitors/
 COPY analyzers/ /app/analyzers/
 COPY data_sources/ /app/data_sources/
+COPY data_crawler/ /app/data_crawler/
 COPY notifiers/ /app/notifiers/
 COPY utils/ /app/utils/
-COPY test/ /app/test/
 COPY storage/ /app/storage/
-COPY main.py /app/
 
 # 创建数据目录
 RUN mkdir -p /data
@@ -49,5 +49,8 @@ WORKDIR /app
 # 挂载数据目录
 VOLUME ["/data"]
 
-# 启动主程序
-CMD ["python", "main.py"]
+# 暴露API端口
+EXPOSE 8000
+
+# 启动FastAPI服务
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

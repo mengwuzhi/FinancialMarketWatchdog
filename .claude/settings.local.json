@@ -8,7 +8,19 @@
       "Bash(ls:*)",
       "Bash(echo \"验证系统完整性...\" echo \"\" echo \"1. 检查是否还有LOF premium相关的Python引用：\" grep -r \"LOFPremiumMonitor\\\\|lof_premium\\\\|get_lof_with_discount\" --include=\"*.py\" .)",
       "Bash(echo \" ✓ 未找到相关引用\" echo \"\" echo \"2. 当前监控器列表：\" ls -1 monitors/*.py)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(find:*)",
+      "Bash(test:*)",
+      "Bash(chmod:*)",
+      "Bash(git fetch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)",
+      "Bash(wc:*)",
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/app/routers/system.py\":*)",
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/app/routers/market.py\":*)",
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/app/routers/crawler.py\":*)",
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/app/scheduler.py\":*)",
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/.env.example\":*)"
     ]
   }
 }

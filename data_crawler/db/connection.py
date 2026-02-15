@@ -2,7 +2,7 @@
 import pymysql
 import logging
 
-from config.settings import DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
+from data_crawler.config.settings import DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
 
 logger = logging.getLogger(__name__)
 

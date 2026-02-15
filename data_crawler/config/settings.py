@@ -1,19 +1,19 @@
-"""FinancialMarketWatchdog — Central Config"""
-import os
-from dotenv import load_dotenv
+"""FinancialMarketWatchdog — Central Config (proxy to app.config)"""
 
-load_dotenv()
+from app.config import get_settings
+
+_s = get_settings()
 
 # ─── Database ─────────────────────────────────────────────────
-DB_HOST     = os.getenv("DB_HOST",     "47.95.221.184")
-DB_PORT     = int(os.getenv("DB_PORT", "18453"))
-DB_USER     = os.getenv("DB_USER",     "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "RLCs9.Y3.mSG3@")
-DB_NAME     = os.getenv("DB_NAME",     "watchdog_db")
+DB_HOST = _s.db_host
+DB_PORT = _s.db_port
+DB_USER = _s.db_user
+DB_PASSWORD = _s.db_password
+DB_NAME = _s.db_name
 
 # ─── Timezone / Logging ───────────────────────────────────────
-TIMEZONE  = os.getenv("TIMEZONE", "Asia/Shanghai")
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+TIMEZONE = _s.timezone
+LOG_LEVEL = _s.log_level
 
 # ─── Stock Index Config (yfinance tickers) ────────────────────
 INDEX_CONFIG = [
