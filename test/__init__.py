@@ -1,1 +1,1 @@
-# Test package for LOF Watchdog
+# Test package for FinancialMarketWatchdog
