@@ -22,7 +22,8 @@
       "Bash(\"d:/code/FinancialMarketWatchdog_src/app/scheduler.py\":*)",
       "Bash(\"d:/code/FinancialMarketWatchdog_src/.env.example\":*)",
       "Bash(git commit:*)",
-      "Bash(\"d:/code/FinancialMarketWatchdog_src/.env\":*)"
+      "Bash(\"d:/code/FinancialMarketWatchdog_src/.env\":*)",
+      "Bash(git push:*)"
     ]
   }
 }

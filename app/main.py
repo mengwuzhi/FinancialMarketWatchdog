@@ -24,7 +24,10 @@ async def lifespan(app: FastAPI):
     # Initialize database tables
     try:
         from data_crawler.db.init_tables import init_all_tables
+        from data_crawler.db.stock_history_tables import init_stock_history_tables
+
         init_all_tables()
+        init_stock_history_tables()
         logger.info("Database tables initialized")
     except Exception as e:
         logger.error("Failed to initialize database tables: %s", e)
@@ -49,9 +52,10 @@ app = FastAPI(
 )
 
 # Register routers
-from app.routers import system, market, crawler, analysis  # noqa: E402
+from app.routers import system, market, crawler, analysis, stock_history  # noqa: E402
 
 app.include_router(system.router)
 app.include_router(market.router)
 app.include_router(crawler.router)
 app.include_router(analysis.router)
+app.include_router(stock_history.router)
